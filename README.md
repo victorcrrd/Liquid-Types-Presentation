@@ -2,7 +2,7 @@
 
 ## Outline
 
-- Introductio: Motivation
+- Introduction: Motivation
 - Refinement Type, Dependent Type, Liquid Type
 - Example: Liquid Haskell
 - Importance of type inference for Liquid Types
