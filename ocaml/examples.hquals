@@ -1,1 +1,4 @@
-example
+qualif POS(v): 0 <= v 
+qualif LT(v): ~A <= v
+qualif GT(v):  v < ~A
+qualif BND(v): v < Array.length ~A 
