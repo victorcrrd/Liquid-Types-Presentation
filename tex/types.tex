@@ -1,0 +1,33 @@
+\section{Liquid Types}
+
+%\begin{frame}{Refinement and Liquid Types}
+%\end{frame}
+
+%\begin{frame}{Relationship with Dependent Types}
+%\end{frame}
+
+\begin{frame}{Liquid Types}
+\begin{itemize}
+    \item \textbf{Dependent types}: types that depends of the value.
+    \item \textbf{Refinement types}: each {\color{blue} type} is refined by a  {\color{red} logic formula}.
+    \[
+        \{v:\text{\color{blue} T}\ |\ {\color{red} p}(v)\}
+    \]
+    \item \textbf{Liquid types}: refinement types where ${\color{red} p}$ is a conjunction of elements of a set $\mathbb{Q}^*$ (logical qualifiers)
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[containsverbatim]{Dependent Type Example}
+\begin{lstlisting}[language=haskell]
+data Vect : (len : Nat) -> (elem : Type) -> Type where
+  Nil  : Vect Z elem
+  (::) : (x : elem) -> (xs : Vect len elem) -> Vect (S len) elem
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Refinement Type Example}
+\begin{lstlisting}[language=haskell]
+size:: x:array(a) -> nat[v | v = length(x)]
+\end{lstlisting}
+\end{frame}

@@ -1,0 +1,83 @@
+\section{Inference Algorithm}
+
+
+\begin{frame}[containsverbatim]{Inference Algorithm}
+\begin{itemize}
+    \item Template generation.
+    \item Constraint generation.
+    \item Constraint solving.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[containsverbatim]{Example in OCaml}
+\begin{lstlisting}[language=ML, basicstyle=\small]
+let rec sum n =
+  if n < 0 then 0 else
+    let s = sum (n-1) in
+    s + n
+\end{lstlisting}
+
+Hindley-Milner type inference $\leadsto$ \inlineml{sum::}$\text{int}\rightarrow\text{int}$
+\end{frame}
+
+
+
+\begin{frame}[containsverbatim]{Template generation}
+\begin{lstlisting}[language=ML, basicstyle=\small]
+let rec sum n =
+  if n < 0 then 0 else
+    let s = sum (n-1) in
+    s + n
+\end{lstlisting}
+
+Liquid type (template) $\leadsto$ \inlineml{sum:: n}$\colon\{v\colon\text{int}\,|\,{\color{red} \kappa_1}\}\rightarrow\{v\colon\text{int}\,|\,{\color{red} \kappa_2}\}$
+\end{frame}
+
+\begin{frame}[containsverbatim]{Constraint generation}
+Constraints
+\begin{itemize}
+\item well-formedness (or scope) constraints $\leadsto \Gamma\vdash\{v\colon B\,|\,e\}$
+\item subtyping constraints $\leadsto \Gamma\vdash\{v\colon B\,|\,e_1\} <\colon \{v\colon B\,|\,e_2\}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Well-formedness constraints}
+\begin{lstlisting}[language=ML, basicstyle=\small]
+let rec sum n =
+  if n < 0 then 0 else
+    let s = sum (n-1) in
+    s + n
+\end{lstlisting}
+$\vdash\{v\colon\text{int}\,|\, \kappa_1\}$
+
+\inlineml{n}$\colon\{v\colon\text{int}\,|\, \kappa_1\}\vdash\{v\colon\text{int}\,|\, \kappa_2\}$
+\end{frame}
+
+\begin{frame}[containsverbatim]{Subtyping constraints}
+\begin{lstlisting}[language=ML, basicstyle=\small]
+let rec sum n =
+  if n < 0 then 0 else
+    let s = sum (n-1) in
+    s + n
+\end{lstlisting}
+\inlineml{n}$\colon\{v\colon\text{int}\,|\, \kappa_1\},n < 0\vdash\{v\colon\text{int}\,|\, v = 0\}<\colon\{v\colon\text{int}\,|\, \kappa_2\}$
+
+\inlineml{n}$\colon\{v\colon\text{int}\,|\, \kappa_1\},\neg(n < 0)\vdash\{v\colon\text{int}\,|\, v = n-1\}<\colon\{v\colon\text{int}\,|\, \kappa_1\}$
+
+\inlineml{n}$\colon\{v\colon\text{int}\,|\, \kappa_1\},\neg(n < 0),\,$\inlineml{s}$\colon\{v\colon\text{int}\,|\, \kappa_2\left[n-1/n\right]\}\vdash\{v\colon\text{int}\,|\, v = s+n\}<\colon\{v\colon\text{int}\,|\, \kappa_2\}$
+\end{frame}
+
+\begin{frame}[containsverbatim]{Constraint solving}
+$\kappa \mapsto Q_{\kappa}\subseteq \{q \,|\, q\in\mathbb{Q}^* \text{ and } FV(q)\subseteq \{v\} \cup Var(\Gamma) \cup Var(e)\}$
+
+\begin{itemize}
+\item well-formedness (or scope) constraints
+
+$\Gamma\vdash\{v\colon B\,|\,e\}\leadsto e\colon\text{bool}$
+\item subtyping constraints
+
+$\Gamma\vdash\{v\colon B\,|\,e_1\} <\colon \{v\colon B\,|\,e_2\}\leadsto e_1\Rightarrow e_2$
+\end{itemize}
+\end{frame}

@@ -1,0 +1,19 @@
+\section{Introduction}
+
+\begin{frame}[containsverbatim]{Why Liquid Types?}
+\begin{lstlisting}[language=Haskell, basicstyle=\small]
+unsafediv :: Int -> Int -> Int
+
+unsafediv x y = x `div` y
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Why Liquid Types?}
+\begin{lstlisting}[language=Haskell, basicstyle=\small]
+{-@ safediv :: Int -> {v : Int | v != 0} -> Int @-}
+
+safediv :: Int -> Int -> Int
+
+safediv x y = x `div` y
+\end{lstlisting}
+\end{frame}

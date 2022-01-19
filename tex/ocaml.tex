@@ -1,0 +1,71 @@
+\section{Case Study: OCaml and DSOLVE}
+
+% DSOLVE diagram
+%\begin{frame}{Case Study: Ocaml and DSOLVE}
+%\begin{figure}[h]
+%\includegraphics[width=8cm]{figures/dsolve_diagram.png}
+%\end{figure}
+%\end{frame}
+
+% Examples
+% slide 1
+\begin{frame}[containsverbatim]{Examples .ml}
+
+\begin{lstlisting}[language=Caml]
+let max x y =
+  if x > y then x else y
+\end{lstlisting}
+
+\begin{lstlisting}[language=Caml]
+let rec sum k =
+  if k < 0 then 0 else
+     let s = sum (k-1) in
+     s + k
+\end{lstlisting}
+
+\end{frame}
+
+% slide 2
+\begin{frame}[containsverbatim]{Examples .ml}
+
+\begin{lstlisting}[language=Caml]
+let foldn n b f = 
+  let rec loop i c =
+    if i < n then loop (i+1) (f i c) else c int
+  loop 0 b
+\end{lstlisting}
+
+\begin{lstlisting}[language=Caml]
+let arraymax a = 
+  let am l m = max (sub a l) m in 
+  foldn (len a) 0 am
+
+\end{lstlisting}
+\end{frame}
+
+% slide 3
+\begin{frame}[containsverbatim]{Examples .hquals}
+\begin{lstlisting}[language=Caml]
+qualif POS(v): 0 <= v 
+qualif LT(v): ~A <= v
+qualif GT(v):  v < ~A
+qualif BND(v): v < Array.length ~A 
+\end{lstlisting}
+\end{frame}
+
+
+% slide 3
+\begin{frame}[containsverbatim]{Examples liquid types}
+\begin{verbatim}
+max:: x:int -> y:int -> {v:int | (x <= v) && (y <= v)}
+
+sum:: k:int ->{v:int | 0 <= v && k <= v}
+
+foldn :: forall a.
+    n:int -> 
+    b:a -> 
+    f:({0 <= v || v < n} -> a -> a) -> a
+
+arraymax :: intarray -> {v:int | 0 <= v}
+\end{verbatim}
+\end{frame}
